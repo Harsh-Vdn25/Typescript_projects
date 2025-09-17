@@ -6,6 +6,7 @@ import { Schema } from "mongoose";
 
 const url=process.env['MONGO_URL']
 
+
 export const connectDB=async()=>{
     if(!url){
         throw new Error('MONGO_URL is not defined')
