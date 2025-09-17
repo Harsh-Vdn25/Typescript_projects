@@ -4,11 +4,15 @@ export interface UserType{
     _id:Types.ObjectId;
     username:string;
     password:string;
+    firstName:string;
+    lastName:string;
 }
 
 const UserSchema=new Schema<UserType>({
     username:{type:String,required:true,unique:true},
-    password:String
+    password:String,
+    firstName:String,
+    lastName:String
 })
 
 export const UserModel=mongoose.model<UserType>('user',UserSchema);
