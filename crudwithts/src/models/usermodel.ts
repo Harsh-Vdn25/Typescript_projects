@@ -1,14 +1,17 @@
 import mongoose,{Schema,model} from "mongoose";
+import { Types } from "mongoose";
 
-interface UserDoc {
-    username:string;
-    email:string;
-    authentication:{
-        password:string,
-        salt:string,
-        sessionToken?:string
-    }
-};
+export interface UserDoc {
+  _id: Types.ObjectId;  
+  username: string;
+  email: string;
+  authentication: {
+    password: string;
+    salt: string;
+    sessionToken?: string;
+  };
+}
+
 
 const UserSchema=new Schema<UserDoc>({
     username:{type:String,required:true},
@@ -24,7 +27,7 @@ export const UserModel=mongoose.model<UserDoc>('User',UserSchema);
  
 export const getUsers=():Promise<UserDoc[]>=>UserModel.find();
 
-export const getUserByEmail=(email:string):Promise<UserDoc|null>=>UserModel.findOne({email});
+export const getUserByEmail=(email:string)=>UserModel.findOne({email});
 
 export const getUserBySessionToken=(sessionToken:string):Promise<UserDoc|null>=>UserModel.findOne({
     'authentication.sessionToken':sessionToken
