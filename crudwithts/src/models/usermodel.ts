@@ -10,7 +10,6 @@ interface UserDoc {
     }
 };
 
-
 const UserSchema=new Schema<UserDoc>({
     username:{type:String,required:true},
     email:{type:String,unique:true,required:true},
@@ -21,7 +20,7 @@ const UserSchema=new Schema<UserDoc>({
     },
 });
 
-export const UserModel=mongoose.model('User',UserSchema);
+export const UserModel=mongoose.model<UserDoc>('User',UserSchema);
  
 export const getUsers=():Promise<UserDoc[]>=>UserModel.find();
 
