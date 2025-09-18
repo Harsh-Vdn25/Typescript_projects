@@ -19,13 +19,13 @@ const Signup = async (req, res) => {
             res.status(400).json({ message: "User already exists" });
             return;
         }
-        console.log('here');
+        console.log("here");
         const hashedPassword = await bcrypt_1.default.hash(password, config_1.Configs.SALT_ROUNDS);
         const newUser = await usermodel_1.UserModel.create({
             username: username,
             password: hashedPassword,
             firstName: firstName,
-            lastName: lastName
+            lastName: lastName,
         });
         console.log(newUser);
         res.status(200).json({ message: "Signed up successfully" });
@@ -39,7 +39,9 @@ exports.Signup = Signup;
 const Signin = async (req, res) => {
     const { username, password } = req.body;
     try {
-        const UserData = await usermodel_1.UserModel.findOne({ username }).select('+password');
+        const UserData = await usermodel_1.UserModel.findOne({
+            username,
+        }).select("+password");
         if (!UserData) {
             res.status(400).json({ message: "User doesn't exist" });
             return;
@@ -51,11 +53,13 @@ const Signin = async (req, res) => {
             return;
         }
         const token = jsonwebtoken_1.default.sign({
-            id: UserData._id
-        }, config_1.Configs.JWT_SECRET);
+            id: UserData._id.toString(),
+        }, config_1.Configs.JWT_SECRET, {
+            expiresIn: '2 days'
+        });
         res.status(200).json({
             message: "Signed in Successfully",
-            Token: token
+            Token: token,
         });
         return;
     }
