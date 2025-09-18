@@ -12,7 +12,6 @@ export const postContent = async (
       type: type,
       //@ts-ignore
       userId: req.userId,
-      tags: [],
     });
     res.status(201).json({ message: "Content added" });
   } catch (err) {

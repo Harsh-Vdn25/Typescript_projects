@@ -6,6 +6,7 @@ import { getUserByname } from "../models/usermodel";
 import { Configs } from "../config/config";
 import { UserType } from "../models/usermodel";
 import { Types } from "mongoose";
+import { ContentModel } from "../models/contentmodel";
 interface SigninType {
   _id: Types.ObjectId;
   username: string;
@@ -75,3 +76,27 @@ export const Signin = async (req: Request, res: Response): Promise<void> => {
     return;
   }
 };
+
+
+
+
+export const ShareBrain=async(req:Request,res:Response)=>{
+  const link=req.params.uid;
+  if(!link){
+    return res.status(400).json({message:"No Link"});
+  }
+  try{
+    const response=await ContentModel.find({
+      userId:link
+    })
+    if(!response){
+    return res.status(404).json({message:"No second brains found"});
+    }
+    res.status(200).json({
+      Content:response,
+      message:"Fetched the users content successfully"
+    })
+  }catch(err){
+    return res.status(500).json({message:"Serverside problem"});
+  }
+}
