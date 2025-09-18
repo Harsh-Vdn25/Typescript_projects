@@ -13,11 +13,13 @@ const JWT_SECRET = config_1.Configs.JWT_SECRET;
 const Signup = async (req, res) => {
     const { username, password, firstName, lastName } = req.body;
     try {
+        console.log(username);
         const ExistingUser = await (0, usermodel_2.getUserByname)(username);
         if (ExistingUser) {
             res.status(400).json({ message: "User already exists" });
             return;
         }
+        console.log('here');
         const hashedPassword = await bcrypt_1.default.hash(password, config_1.Configs.SALT_ROUNDS);
         const newUser = await usermodel_1.UserModel.create({
             username: username,
@@ -30,6 +32,7 @@ const Signup = async (req, res) => {
     }
     catch (err) {
         console.log("Serverside Error");
+        res.status(500).json({ message: err });
     }
 };
 exports.Signup = Signup;
@@ -41,9 +44,11 @@ const Signin = async (req, res) => {
             res.status(400).json({ message: "User doesn't exist" });
             return;
         }
-        const isValidated = await bcrypt_1.default.compare(UserData.password, password);
+        console.log(password);
+        const isValidated = await bcrypt_1.default.compare(password, UserData.password);
         if (!isValidated) {
             res.status(401).json({ message: "Wrong password" });
+            return;
         }
         const token = jsonwebtoken_1.default.sign({
             id: UserData._id
@@ -52,6 +57,7 @@ const Signin = async (req, res) => {
             message: "Signed in Successfully",
             Token: token
         });
+        return;
     }
     catch (err) {
         console.log("Serverside problem");
