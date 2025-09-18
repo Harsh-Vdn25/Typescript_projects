@@ -9,6 +9,7 @@ dotenv_1.default.config();
 exports.Configs = {
     port: process.env['PORT'] || '',
     MONGO_URL: process.env['MONGO_URL'] || '',
-    JWT_SECRET: process.env['JWT_SECRET'] || ''
+    JWT_SECRET: process.env['JWT_SECRET'] || '',
+    SALT_ROUNDS: Number(process.env['SALT_ROUNDS']) || 10
 };
 //# sourceMappingURL=config.js.map

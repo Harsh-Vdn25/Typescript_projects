@@ -6,8 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const config_1 = require("./config/config");
 const db_1 = require("./config/db");
+const userRoute_1 = require("./routes/userRoute");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+app.use('/api/v1/user', userRoute_1.userRouter);
 const port = parseInt(config_1.Configs.port);
 async function main() {
     await (0, db_1.DBConnect)();

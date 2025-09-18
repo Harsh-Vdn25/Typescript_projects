@@ -33,19 +33,15 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserByname = exports.UserModel = void 0;
+exports.ContentModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const UserSchema = new mongoose_1.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, select: false },
-    firstName: String,
-    lastName: String
+;
+const ContentSchema = new mongoose_1.Schema({
+    title: { type: String, required: true },
+    link: String,
+    type: String,
+    tags: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Tag' },
+    userId: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' }
 });
-exports.UserModel = mongoose_1.default.model('user', UserSchema);
-const getUserByname = async (username) => {
-    return await exports.UserModel.findOne({
-        username: username
-    });
-};
-exports.getUserByname = getUserByname;
-//# sourceMappingURL=usermodel.js.map
+exports.ContentModel = mongoose_1.default.model("Content", ContentSchema);
+//# sourceMappingURL=contentmode.js.map

@@ -3,14 +3,14 @@ import mongoose,{model,Types,Schema} from "mongoose";
 export interface UserType{
     _id:Types.ObjectId;
     username:string;
-    password:string;
-    firstName:string;
-    lastName:string;
+    password?:string;
+    firstName?:string;
+    lastName?:string;
 }
 
 const UserSchema=new Schema<UserType>({
     username:{type:String,required:true,unique:true},
-    password:String,
+    password:{type:String,select:false},
     firstName:String,
     lastName:String
 })

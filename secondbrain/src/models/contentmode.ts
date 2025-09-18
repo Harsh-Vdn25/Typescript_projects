@@ -17,4 +17,4 @@ const ContentSchema=new Schema<ContentType>({
     userId:{type:Schema.Types.ObjectId,ref:'User'}
 })
 
-const ContentModel=mongoose.model<ContentType>("Content",ContentSchema);
+export const ContentModel=mongoose.model<ContentType>("Content",ContentSchema);
