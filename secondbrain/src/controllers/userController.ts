@@ -78,25 +78,3 @@ export const Signin = async (req: Request, res: Response): Promise<void> => {
 };
 
 
-
-
-export const ShareBrain=async(req:Request,res:Response)=>{
-  const link=req.params.uid;
-  if(!link){
-    return res.status(400).json({message:"No Link"});
-  }
-  try{
-    const response=await ContentModel.find({
-      userId:link
-    })
-    if(!response){
-    return res.status(404).json({message:"No second brains found"});
-    }
-    res.status(200).json({
-      Content:response,
-      message:"Fetched the users content successfully"
-    })
-  }catch(err){
-    return res.status(500).json({message:"Serverside problem"});
-  }
-}

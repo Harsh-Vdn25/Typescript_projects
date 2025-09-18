@@ -27,7 +27,7 @@ const Button = (props: ButtonProps) => {
       <button
         className={`${variantStyles[props.variant]} ${defaultStyles} ${
           sizeStyles[props.size]
-        } flex flex-row gap-1`}
+        } flex flex-row gap-1 items-center`}
       >
         {props.startIcon && <span >{props.startIcon}</span>}
         {props.text}

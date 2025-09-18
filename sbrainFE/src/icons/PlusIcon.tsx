@@ -1,4 +1,6 @@
-const PlusIcon = () => {
+import { iconSizeDetailes, type IconProps } from "./index";
+
+const PlusIcon = (props:IconProps) => {
   return (
     <div>
       <svg
@@ -7,7 +9,7 @@ const PlusIcon = () => {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        className="size-6"
+        className={iconSizeDetailes[props.size]}
       >
         <path
           stroke-linecap="round"
