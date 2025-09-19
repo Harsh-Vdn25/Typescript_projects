@@ -5,16 +5,16 @@ type eventType={
     onClick:()=>void
 }
 
-export const CrossIcon = (props:(IconProps&eventType)) => {
+export const CrossIcon = ({ onClick, size }:(IconProps&eventType)) => {
   return (
-    <div onClick={props.onClick}>
+    <div onClick={onClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        className={`${iconSizeDetailes[props.size]} cursor-pointer
+        className={`${iconSizeDetailes[size]} cursor-pointer
         focus:outline-2 border border-none focus:border-black`}
       >
         <path

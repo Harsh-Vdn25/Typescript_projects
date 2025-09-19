@@ -1,5 +1,6 @@
 import { CrossIcon } from "../icons/crossIcon";
-interface OpenType {
+
+ interface OpenType {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }

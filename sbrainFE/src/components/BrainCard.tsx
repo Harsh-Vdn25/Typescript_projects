@@ -15,9 +15,9 @@ export const BrainCard = ({ title, link, type }: CardProps) => {
   return (
     <div
       className="p-8 bg-white rounded-md shadow-md border-gray-200
-    max-w-72 border flex flex-col gap-3"
+    max-w-72 border flex flex-col  gap-3"
     >
-      <div className="flex justify-between text-md">
+      <div className="flex  justify-between text-md">
         <div className="flex items-center gap-2">
           <ShareIcon size="md" />
           {title}

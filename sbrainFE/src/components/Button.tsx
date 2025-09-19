@@ -28,6 +28,7 @@ const Button = (props: ButtonProps) => {
         className={`${variantStyles[props.variant]} ${defaultStyles} ${
           sizeStyles[props.size]
         } flex flex-row gap-1 items-center`}
+        onClick={props.onClick}
       >
         {props.startIcon && <span >{props.startIcon}</span>}
         {props.text}

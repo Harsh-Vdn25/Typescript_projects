@@ -1,7 +1,14 @@
+import type { ReactElement } from "react";
 
+export interface sidebarType{
+  text:string;
+  icon:ReactElement;
+}
 
-export const SidebarItem = () => {
+export const SidebarItem = (props:sidebarType) => {
   return (
-    <div>SidebarItem</div>
+    <div>
+      {props.icon} {props.text}
+    </div>
   )
 }
