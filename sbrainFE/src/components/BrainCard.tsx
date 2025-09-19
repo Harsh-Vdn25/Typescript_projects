@@ -6,6 +6,11 @@ interface CardProps {
   type: "twitter" | "youtube" | "notes";
 }
 
+// const iconType={
+//   'twitter':,
+
+// }
+
 export const BrainCard = ({ title, link, type }: CardProps) => {
   return (
     <div
