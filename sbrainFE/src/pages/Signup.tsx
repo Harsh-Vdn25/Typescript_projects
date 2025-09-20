@@ -2,11 +2,42 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { Input } from "../components/ContentModal";
 import Button from "../components/Button";
+import { api } from "../lib/api";
+import { useNavigate } from "react-router-dom";
+ 
+export interface ResponseType{
+    Token:string;
+    message?:string
+}
+
 export const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setfirstName] = useState("");
-  const [lastName, setlastName] = useState("");
+  const [Allow,setAllow]=useState(false);
+
+  const navigate=useNavigate();
+
+  const handleSignup=async ()=>{
+    console.log(username,password);
+    if(!username||!password){
+        alert('Please fill all the fields')
+        return ;
+    }
+    try{
+        const response=await api.post<ResponseType>('/user/signup',{
+        username,
+        password
+    })
+    if (!response.data?.Token) {
+        alert("Signup failed, please try again.");
+        return;
+      }
+    localStorage.setItem('BrainlyToken',response.data['Token']);
+    navigate('/home');
+    }catch(err){
+        console.log(err);
+    }
+  }
   return (
     <div className="w-screen h-screen  bg-gray-200 flex justify-center items-center">
       <form
@@ -33,31 +64,13 @@ export const Signup = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div className="flex">
-          <Input
-            type="text"
-            value={firstName}
-            placeholder="LastName"
-            className=""
-            onChange={(e) => setfirstName(e.target.value)}
-          />
-        </div>
-        <div className="flex">
-          <Input
-            type="text"
-            value={lastName}
-            placeholder="firstName"
-            className=""
-            onChange={(e) => setlastName(e.target.value)}
-          />
-        </div>
         <Button
           type="submit"
           text="Signup"
           variant="primary"
           size="md"
           loading={false}
-          onClick={() => {}}
+          onClick={() => handleSignup()}
         />
       </form>
     </div>

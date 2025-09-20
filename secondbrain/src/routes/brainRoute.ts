@@ -2,7 +2,7 @@ import express,{Request,Response} from 'express';
 import { LinkModel } from '../models/linkmodel';
 import { ContentModel } from '../models/contentmodel';
 import { decodeToken } from '../middlewares/decodeToken';
-import { random } from '../utils';
+import { random } from '../utils/utils';
 
 export const brainRouter=express.Router();
 

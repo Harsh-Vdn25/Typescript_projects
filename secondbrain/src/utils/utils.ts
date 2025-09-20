@@ -1,3 +1,4 @@
+//used for the link generation
 export const random=(num:number)=>{
     const chars="qwertyuioasdfghjklzxcvbnm12345678";
     const length=chars.length;

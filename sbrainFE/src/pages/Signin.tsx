@@ -2,10 +2,36 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { Input } from "../components/ContentModal";
 import Button from "../components/Button";
+import { api } from "../lib/api";
+import  { type ResponseType } from "./Signup";
+import { useNavigate } from "react-router-dom";
 export const Signin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate=useNavigate();
+  const handleSignin=async ()=>{
+      console.log(username,password);
+      if(!username||!password){
+          alert('Please fill all the fields')
+          return ;
+      }
+      try{
+          const response=await api.post<ResponseType>('/user/signin',{
+          username,
+          password
+      })
+      if (!response.data?.Token) {
+          alert("Signup failed, please try again.");
+          return;
+        }
+      localStorage.setItem('BrainlyToken',response.data['Token']);
+      navigate('/home');
+      }catch(err){
+          console.log(err);
+      }
+    }
   return (
+    
     <div className="w-screen h-screen  bg-gray-200 flex justify-center items-center">
       <form
         onSubmit={(e: FormEvent) => e.preventDefault()}
@@ -37,7 +63,7 @@ export const Signin = () => {
           variant="primary"
           size="md"
           loading={false}
-          onClick={() => {}}
+          onClick={() => {handleSignin()}}
         />
       </form>
     </div>

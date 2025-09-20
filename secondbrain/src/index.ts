@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { Configs } from './config/config';
 import { DBConnect } from './config/db';
 import { userRouter } from './routes/userRoute';
@@ -6,6 +7,14 @@ import { contentRouter } from './routes/contentRoute';
 import { brainRouter } from './routes/brainRoute';
 const app=express();
 app.use(express.json());
+
+const corsOptions:cors.CorsOptions={
+    origin:"http://localhost:5173",
+    methods:"GET,POST,PUT,DELETE",
+    credentials:true,
+    allowedHeaders:'Content-Type,Authorization',
+}
+app.use(cors(corsOptions));
 
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/content',contentRouter);
