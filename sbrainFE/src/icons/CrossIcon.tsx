@@ -1,5 +1,5 @@
 import type { IconProps } from "./index";
-import { iconSizeDetailes } from "./index";
+import { iconSizeDetails } from "./index";
 
 type eventType={
     onClick:()=>void
@@ -14,7 +14,7 @@ export const CrossIcon = ({ onClick, size }:(IconProps&eventType)) => {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        className={`${iconSizeDetailes[size]} cursor-pointer
+        className={`${iconSizeDetails[size]} cursor-pointer
         focus:outline-2 border border-none focus:border-black`}
       >
         <path

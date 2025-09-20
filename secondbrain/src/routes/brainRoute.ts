@@ -25,7 +25,9 @@ brainRouter.post('/share',decodeToken,async(req:Request,res:Response)=>{
             userId:userId,
             hash:hash
         })
-        res.json(hash);
+        res.json({
+            hash:hash
+        });
     }else{
         await LinkModel.deleteOne({
             userId: userId
@@ -63,5 +65,4 @@ brainRouter.get('/:shareLink',async(req:Request,res:Response)=>{
 });
 
 
-// brainRouter.delete('/');
 

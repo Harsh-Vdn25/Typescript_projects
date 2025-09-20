@@ -31,7 +31,7 @@ export const ContentModal = ({ open, setOpen }: OpenType) => {
         link: Link,
       },{
         headers:{
-           "Authorization": `Bearer ${Token}`
+           "Authorization": `Bearer ${Token?.Token}`
         }
       });
       console.log(response.data);

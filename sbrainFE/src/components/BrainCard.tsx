@@ -2,6 +2,7 @@ import ShareIcon from "../icons/ShareIcon";
 import { Twitter } from "../icons/Twitter";
 import { YouTube } from "../icons/YouTube";
 import { ContentType } from "./ContentModal";
+import { DeleteIcon } from "../icons/DeleteIcon";
 export interface CardProps {
   title: string;
   link: string;
@@ -12,17 +13,16 @@ export const BrainCard = ({ title, link, type }: CardProps) => {
   return (
     <div
       className="p-8 bg-white rounded-md shadow-md border-gray-200
-    max-w-72 border flex flex-col  gap-3"
+    max-w-72 border flex flex-col  gap-4"
     >
       <div className="flex  justify-between text-md">
         <div className="flex items-center gap-2">
           {type === ContentType.YouTube ? <YouTube /> : <Twitter />}
           {title}
         </div>
-        <div className="flex text-gray-500">
-          <a href="">
-            <ShareIcon size="md" />
-          </a>
+        <div className="flex items-center gap-2 text-gray-500">
+          <ShareIcon size="md" />
+          <DeleteIcon size="md" />
         </div>
       </div>
       <div>
@@ -47,7 +47,6 @@ export const BrainCard = ({ title, link, type }: CardProps) => {
           </blockquote>
         )}
       </div>
-      <div className="">Tags</div>
     </div>
   );
 };
