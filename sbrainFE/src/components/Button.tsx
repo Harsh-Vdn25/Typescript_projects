@@ -7,6 +7,7 @@ export interface ButtonProps {
   type?:"submit" | "reset" | "button" | undefined;
   startIcon?: any;
   endIcon?: any;
+  loading?:boolean;
   onClick?: () => void;
 }
 
@@ -28,7 +29,8 @@ const Button = (props: ButtonProps) => {
       <button
         className={`${variantStyles[props.variant]} ${defaultStyles} ${
           sizeStyles[props.size]
-        } flex flex-row gap-1 justify-center items-center`}
+        } flex flex-row gap-1 justify-center items-center ${props.loading?"opacity-75":""}`}
+        disabled={props.loading}
         onClick={props.onClick}
         type={props.type}
       >

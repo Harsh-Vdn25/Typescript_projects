@@ -25,7 +25,7 @@ export const ContentModal = ({ open, setOpen }: OpenType) => {
               onSubmit={(e) => {
                 e.preventDefault();
               }}
-              className="flex flex-col justify-center gap-2"
+              className="flex flex-col items-center gap-2"
             >
               <div className="flex flex-col gap-2">
                 <label>Note</label>
@@ -58,15 +58,18 @@ export const ContentModal = ({ open, setOpen }: OpenType) => {
 
 export const inputStyle="h-12 font-medium border border-gray-700 rounded-md ";
 export interface InputType{
-  type:string;
+  type:'text'|'password'|'email'|'number'|'url';
   placeholder:string;
   value:string;
   className?:string;
   onChange:(e:ChangeEvent<HTMLInputElement>)=>void;
 }
 
-function Input(props:InputType){
+
+export function Input(props:InputType){
   return <input type={props.type} placeholder={props.placeholder}
   value={props.value} onChange={props.onChange}
-  className={`${inputStyle}`}/>
+  className={`${inputStyle} w-64 px-3 py-2 border border-gray-300 rounded-md 
+        focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent 
+        placeholder-gray-400 text-gray-700`}/>
 }
