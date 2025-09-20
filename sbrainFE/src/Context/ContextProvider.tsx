@@ -1,17 +1,20 @@
-import { Children, useContext,useState } from "react";
+import { useState, type Provider, type ReactNode } from "react";
 import { createContext } from "react";
-type ContextType={
-        Token:string;
-        setToken:React.Dispatch<React.SetStateAction<string>>
+type ContextType = {
+  Token: string;
+  setToken: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const UserContext=createContext<ContextType|undefined>(undefined);
-
-export const ContextProvider = () => {
-    const [Token,setToken]=useState('');
-  return (
-    <ContextProvider.Provider value={[Token,setToken]}>
-        {Children}
-    </ContextProvider.Provider>
-  )
+interface ProviderProps {
+  children: ReactNode;
 }
+export const UserContext = createContext<ContextType | undefined>(undefined);
+
+export const ContextProvider = ({ children }: ProviderProps) => {
+  const [Token, setToken] = useState("");
+  return (
+    <UserContext.Provider value={{ Token, setToken }}>
+      {children}
+    </UserContext.Provider>
+  );
+};

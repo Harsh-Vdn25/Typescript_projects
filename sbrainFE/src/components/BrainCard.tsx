@@ -1,15 +1,12 @@
 import ShareIcon from "../icons/ShareIcon";
-
-interface CardProps {
+import { Twitter } from "../icons/Twitter";
+import { YouTube } from "../icons/YouTube";
+import { ContentType } from "./ContentModal";
+export interface CardProps {
   title: string;
   link: string;
   type: "twitter" | "youtube" | "notes";
 }
-
-// const iconType={
-//   'twitter':,
-
-// }
 
 export const BrainCard = ({ title, link, type }: CardProps) => {
   return (
@@ -19,7 +16,7 @@ export const BrainCard = ({ title, link, type }: CardProps) => {
     >
       <div className="flex  justify-between text-md">
         <div className="flex items-center gap-2">
-          <ShareIcon size="md" />
+          {type === ContentType.YouTube ? <YouTube /> : <Twitter />}
           {title}
         </div>
         <div className="flex text-gray-500">
@@ -34,7 +31,7 @@ export const BrainCard = ({ title, link, type }: CardProps) => {
             className="w-full h-auto"
             width="560"
             height="315"
-            src={link.replace('watch','embed')}
+            src={link.replace("watch", "embed")}
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -43,8 +40,10 @@ export const BrainCard = ({ title, link, type }: CardProps) => {
           ></iframe>
         )}
         {type === "twitter" && (
-          <blockquote  className="twitter-tweet">
-            <a href={link.replace("x.com","twitter.com").replace("?v=","/")}></a>
+          <blockquote className="twitter-tweet">
+            <a
+              href={link.replace("x.com", "twitter.com").replace("?v=", "/")}
+            ></a>
           </blockquote>
         )}
       </div>

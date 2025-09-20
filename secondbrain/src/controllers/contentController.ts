@@ -23,13 +23,12 @@ export const postContent = async (
 export const readAllContent = async (req: Request, res: Response) => {
   //@ts-ignore
   const userId = req.userId;
+  console.log(userId);
   try {
     const Content = await ContentModel.find({
       userId: userId,
-    }).populate("userId","username");
-    return res.status(200).json({
-      Content: Content,
     });
+    return res.status(200).json(Content);
   } catch (err) {
     return res.status(500).json({ message: "Server side Error" });
   }

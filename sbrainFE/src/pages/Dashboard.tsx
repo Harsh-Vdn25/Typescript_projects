@@ -3,10 +3,39 @@ import PlusIcon from "../icons/PlusIcon";
 import ShareIcon from "../icons/ShareIcon";
 import { BrainCard } from "../components/BrainCard";
 import { ContentModal } from "../components/ContentModal";
-import { useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import { Sidebar } from "../components/Sidebar";
+import { api } from "../lib/api";
+import { UserContext } from "../Context/ContextProvider";
+import type { CardProps } from "../components/BrainCard";
+
+
 export const Dashboard = () => {
+    const Token=useContext(UserContext);
     const [open, setOpen] = useState(false);
+    const [Data, setData] = useState<CardProps[]>([]);
+    useEffect(()=>{
+      const fetchInfo=async()=>{
+        try{
+        const response=await api.get('/content',{
+           headers:{
+            "Authorization":`Bearer ${Token?.Token}`
+          }
+        })
+        if(!response?.data||response.data.length===0){
+          alert('No data present');
+          return;
+        }
+        setData(response.data);
+        console.log(typeof Data);
+        console.log(response?.data);
+      }catch(err){
+        console.log(err);
+      }
+      }
+      fetchInfo();
+    },[Token])
+
   return (
     <div className="position-relative">
       <div className="">
@@ -33,16 +62,17 @@ export const Dashboard = () => {
         />
       </div>
       <div className="flex  gap-4">
-        <BrainCard
-          title="Important post"
-          link="https://twitter.com/sachinyadav699/status/1968273831350677715"
-          type="twitter"
-        />
-        <BrainCard
-          title="song"
-          link="https://www.youtube.com/watch?v=60ItHLz5WEA&list=RD60ItHLz5WEA&start_radio=1"
-          type="youtube"
-        />
+        {
+          Data&&
+          Data.map((data: CardProps,value: any)=>(
+            <BrainCard
+            title={data.title}
+            link={data.link}
+            type={data.type}
+
+            />
+          ))
+        }
       </div>
     </div>
     </div>
