@@ -5,7 +5,6 @@ import { getUserByname } from "../models/usermodel";
 import { Configs } from "../config/config";
 import { UserType } from "../models/usermodel";
 import { Types } from "mongoose";
-import { ContentModel } from "../models/contentmodel";
 import { TokenCreation } from "../utils/TokenCreation";
 
 interface SigninType {
@@ -52,7 +51,7 @@ export const Signin = async (req: Request, res: Response): Promise<void> => {
       res.status(400).json({ message: "User doesn't exist" });
       return;
     }
-    
+
     const isValidated = await bcrypt.compare(password, UserData.password);
     if (!isValidated) {
       res.status(401).json({ message: "Wrong password" });

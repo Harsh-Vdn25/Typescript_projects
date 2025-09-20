@@ -5,11 +5,12 @@ export const postContent = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { link, type } = req.body;
+  const { link,title, type } = req.body;
   try {
     const newContent = await ContentModel.create({
       link: link,
       type: type,
+      title:title,
       //@ts-ignore
       userId: req.userId,
     });
@@ -38,7 +39,7 @@ export const updateContent = async (
   res: Response
 ): Promise<void> => {
   const id = req.params.id;
-  const { link, type } = req.body;
+  const { link,title, type } = req.body;
   //@ts-ignore
   const userId = req.userId;
   try {
@@ -48,6 +49,7 @@ export const updateContent = async (
         userId: userId,
       },
       {
+        title:title,
         link: link,
         type: type,
       }

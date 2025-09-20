@@ -12,7 +12,7 @@ const corsOptions:cors.CorsOptions={
     origin:"http://localhost:5173",
     methods:"GET,POST,PUT,DELETE",
     credentials:true,
-    allowedHeaders:'Content-Type,Authorization',
+    allowedHeaders:['Content-Type','Authorization'],
 }
 app.use(cors(corsOptions));
 
