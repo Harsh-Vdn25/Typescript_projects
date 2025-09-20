@@ -1,9 +1,10 @@
 type variants = "primary" | "secondary";
 
-interface ButtonProps {
+export interface ButtonProps {
   variant: variants;
   size: "sm" | "md" | "lg";
   text: string;
+  type?:"submit" | "reset" | "button" | undefined;
   startIcon?: any;
   endIcon?: any;
   onClick?: () => void;
@@ -27,8 +28,9 @@ const Button = (props: ButtonProps) => {
       <button
         className={`${variantStyles[props.variant]} ${defaultStyles} ${
           sizeStyles[props.size]
-        } flex flex-row gap-1 items-center`}
+        } flex flex-row gap-1 justify-center items-center`}
         onClick={props.onClick}
+        type={props.type}
       >
         {props.startIcon && <span >{props.startIcon}</span>}
         {props.text}

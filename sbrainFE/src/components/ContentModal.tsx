@@ -1,11 +1,18 @@
-import { CrossIcon } from "../icons/crossIcon";
+import { useState, type ChangeEvent } from "react";
+import { CrossIcon } from "../icons/CrossIcon";
+import Button from "./Button";
 
- interface OpenType {
+interface OpenType {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ContentModal = ({ open, setOpen }: OpenType) => {
+  const [Link,setLink]=useState('');
+  const [title,setTitle]=useState('');
+  async function handleClick():Promise<void>{
+    
+  }
   return (
     <>
       {open && (
@@ -22,28 +29,44 @@ export const ContentModal = ({ open, setOpen }: OpenType) => {
             >
               <div className="flex flex-col gap-2">
                 <label>Note</label>
-                <input
-                  type="text"
-                  className="h-12 font-medium border border-gray-700 rounded-md "
-                />
+                <Input type="text"
+                  value={title}
+                  placeholder="Add a title"
+                  onChange={(e)=>setTitle(e.target.value)}/>
               </div>
               <div className="flex flex-col gap-2">
                 <label>Link</label>
-                <input
-                  type="text"
-                  className="h-12 font-medium border border-gray-700 rounded-md "
-                />
+                <Input type="text"
+                  value={Link}
+                  placeholder="Add a link"
+                  onChange={(e)=>setLink(e.target.value)}/>
               </div>
             </form>
-            <button
-              type="submit"
-              className="bg-violet-600 p-3 text-white text-lg w-full rounded-lg hover:bg-violet-900"
-            >
-              Submit
-            </button>
+            <Button
+            type="submit"
+            text="Submit"
+            variant="primary"
+            size="md"
+            onClick={()=>{}}
+            />
           </div>
         </div>
       )}
     </>
   );
 };
+
+export const inputStyle="h-12 font-medium border border-gray-700 rounded-md ";
+export interface InputType{
+  type:string;
+  placeholder:string;
+  value:string;
+  className?:string;
+  onChange:(e:ChangeEvent<HTMLInputElement>)=>void;
+}
+
+function Input(props:InputType){
+  return <input type={props.type} placeholder={props.placeholder}
+  value={props.value} onChange={props.onChange}
+  className={`${inputStyle}`}/>
+}

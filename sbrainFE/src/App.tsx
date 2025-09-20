@@ -21,7 +21,6 @@ const App = () => {
           variant="primary"
           text="Add Content"
           onClick={() => {
-            console.log("Add Content button clicked!"); // Add this
             setOpen(true);
           }}
         />
