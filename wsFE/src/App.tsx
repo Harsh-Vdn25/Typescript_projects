@@ -1,4 +1,4 @@
-import {useState,useContext} from 'react';
+import {useContext} from 'react';
 import {Routes,Route,Navigate} from 'react-router-dom'
 import {roomContext} from './Context/ContextProvider'
 import { RoomEntry } from './pages/RoomEntry'
@@ -12,7 +12,8 @@ export const App = () => {
   const {roomId}=Context;
   return (
     <Routes>
-      <Route path={'/join'||'/'} element={roomId?<Navigate to='/chat'/>:<RoomEntry/>}/>
+      {/* <Route path='/' element={<Navigate to='/join'/>}/> */}
+      <Route path={'/join'} element={roomId?<Navigate to='/chat'/>:<RoomEntry/>}/>
       <Route path='/chat' element={roomId?<ChatPage/>:<Navigate to='/join'/>}/>
     </Routes>
   )

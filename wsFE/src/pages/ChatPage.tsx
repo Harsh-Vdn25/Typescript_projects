@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { roomContext } from "../Context/ContextProvider";
+import { useNavigate } from "react-router-dom";
 
 export const ChatPage = () => {
   const [text, setText] = useState("");
@@ -10,13 +11,19 @@ export const ChatPage = () => {
     throw new Error("");
   }
   const {socketRef} = context;
+  const navigate=useNavigate();
 
     useEffect(()=>{
+        if(!socketRef.current){
+            navigate('/join');
+            return;
+        }
        socketRef.current.onmessage=(event)=>{
         setChatData(prev=>[...prev,event?.data]);
-        
        }
-       return ()=>socketRef.current.close;
+       return ()=>{
+        socketRef.current.close
+       };
     },[])
 
   const sendMessage = () => {

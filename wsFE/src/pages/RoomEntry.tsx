@@ -12,25 +12,44 @@ export const RoomEntry = () => {
   if (!context) {
     throw new Error("");
   }
-  
-  const {  setRoomId, socketRef } = context;
+
+  const { setRoomId, socketRef } = context;
 
   const handleSubmit = () => {
-    if (userRoomId.length === 0) {
-      alert("please enter the room Id");
-      return;
-    }
     if (!socketRef.current) {
       socketRef.current = new WebSocket("ws://localhost:3000");
     }
 
     if (isCreate) {
-      //   console.log("Creating room with ID:", userRoomId || "new-room");
+      socketRef.current.onopen = (event) => {
+        socketRef.current.send(
+          JSON.stringify({
+            type: "create",
+          })
+        );
+
+        socketRef.current.onmessage=(event)=>{
+            const roomInfo:string=event?.data
+            const roomId=JSON.parse(roomInfo).roomId;
+            if(!roomId){
+                console.log("Try again");
+                return;
+            }
+            setRoomId(roomId);
+            navigate('/chat');
+       }
+      };
+
+      
     } else {
-      try {
-        socketRef.current.onopen = (event: {
-          currentTarget: { readyState: number };
-        }) => {
+      if (userRoomId.length === 0) {
+        alert("please enter the room Id");
+        return;
+      }
+      socketRef.current.onopen = (event: {
+        currentTarget: { readyState: number };
+      }) => {
+        try {
           socketRef.current.send(
             JSON.stringify({
               type: "join",
@@ -39,17 +58,16 @@ export const RoomEntry = () => {
               },
             })
           );
-          if (!event.currentTarget.readyState) {
-            alert("The roomId does not exist");
-            return;
-          }
           setRoomId(userRoomId);
           navigate("/chat");
-        };
-      } catch (err) {
-        console.log(err);
-        return;
-      }
+        } catch (err) {
+          console.log("Failed to Join", err);
+          return;
+        }
+        // socketRef.current?.onerror = (error) => {
+        //   console.error(error);
+        // };
+      };
     }
   };
 
