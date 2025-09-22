@@ -61,7 +61,9 @@ wss.on("connection", (socket, req) => {
 
       try {
         if (userRoom.includes(socket)) {
-          userRoom.map((s) => s.send(messageInfo.payload?.message));
+          userRoom.forEach(s => {
+            s.send(messageInfo.payload?.message);
+          });
         }
       } catch (err) {
         console.log(err);
