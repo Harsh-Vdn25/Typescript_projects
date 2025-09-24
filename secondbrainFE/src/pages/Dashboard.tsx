@@ -10,7 +10,7 @@ import { Sidebar } from "../components/Sidebar";
 import { api } from "../lib/api";
 import { UserContext } from "../Context/ContextProvider";
 import { ShareBrain } from "../components/ShareBrain";
-import {type CardProps } from "../types/content";
+import { type BrainCardtype } from "../components/BrainCard";
 
 
 export const Dashboard = () => {
@@ -74,9 +74,10 @@ export const Dashboard = () => {
         </div>
         <div className="flex  flex-wrap gap-4">
           {Data &&
-            Data.map((data: CardProps, value: any) => (
+            Data.map((data) => (
               <BrainCard title={data.title} link={data.link}
-               type={data.type} />
+              type={data.type}
+              _id={data._id} />
             ))}
         </div>
       </div>

@@ -1,6 +1,7 @@
 //import the Data,setData context  
-import { DataContext } from "../Context/ContextProvider";
+import { UserContext,DataContext } from "../Context/ContextProvider";
 import { useContext } from "react";
+import { api } from "../lib/api";
 
 import ShareIcon from "../icons/ShareIcon";
 import { Twitter } from "../icons/Twitter";
@@ -10,15 +11,34 @@ import { DeleteIcon } from "../icons/DeleteIcon";
 import {type CardProps } from "../types/content";
 
 
-export const BrainCard = ({ title, link, type }: CardProps) => {
+export const BrainCard = ({ title, link, type,_id }:CardProps) => {
   const context=useContext(DataContext);
+  const usercontext=useContext(UserContext);
+  if(!usercontext){
+    throw new Error('');
+  }
   if(!context){
     throw new Error('');
   }
+  const {Token,setToken}=usercontext;
   const {Data,setData}=context;
 
-  const deleteBrain=()=>{
-    console.log("clicked");
+  const deleteBrain=async (e:React.MouseEvent<SVGElement>)=>{
+    try{
+      const response=await api.delete(`/content/${_id}`,{
+        headers:{
+          Authorization:`Bearer ${Token}`
+        }
+      })
+      if(!response?.data){
+        console.log("Failed to delete");
+        return;
+      }
+      console.log(Data);
+      // const newData=Data.filter()
+    }catch(err){
+      console.error(err);
+    }
   }
   return (
     <div
@@ -33,7 +53,7 @@ export const BrainCard = ({ title, link, type }: CardProps) => {
         <div className="flex items-center gap-2 text-gray-500">
           <ShareIcon size="md" />
           <DeleteIcon size="md" 
-          onClick={deleteBrain}/>
+          onClick={(e)=>deleteBrain(e)}/>
         </div>
       </div>
       <div>

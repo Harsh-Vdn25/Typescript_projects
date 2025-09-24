@@ -1,6 +1,6 @@
 export interface IconProps{
     size:"sm"|"md"|"lg";
-    onClick?:()=>void;
+    onClick?:(e:Event)=>void;
 }
 
 export const iconSizeDetails={
