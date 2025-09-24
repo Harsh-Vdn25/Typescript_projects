@@ -8,14 +8,26 @@ let userCount = 0;
 let allSockets = new Map<string, WebSocket[]>();
 
 type SocketMessage =
-    { type: "join"; payload: { roomId: string } }
-  | { type: "chat"; payload: { message: string } };
+  | { type: "join"; payload: { roomId: string } }
+  | { type: "chat"; payload: { message: string } }
+  | { type: "create" };
 
 //prevents socket duplication in the single room
-function checkSocket(socket:WebSocket,roomId:string){
-    return allSockets.get(roomId)?.includes(socket);
+function checkSocket(socket: WebSocket, roomId: string) {
+  return allSockets.get(roomId)?.includes(socket);
 }
 
+//Genereate RoomId
+function GenerateRoomId(): string {
+  let roomId: string = "";
+  for (let i = 0; i < 7; i++) {
+    roomId += Math.floor(Math.random() * 10);
+  }
+  if (!allSockets.get(roomId)) {
+    return roomId;
+  }
+  return GenerateRoomId();
+}
 
 wss.on("connection", (socket, req) => {
   socket.on("error", console.error);
@@ -33,25 +45,33 @@ wss.on("connection", (socket, req) => {
       return;
     }
 
-    if (messageInfo.type === "join") {
+    //Creating a room
+    if (messageInfo.type === "create") {
+      const roomId = GenerateRoomId();
+      allSockets.set(roomId, [socket]);
+      currentRoomInfo = roomId;
+      socket.send(JSON.stringify({ roomId }));
+    } else if (messageInfo.type === "join") {
       const roomId = messageInfo.payload?.roomId;
+
       if (!roomId) {
         console.log("No room Id");
         return;
       }
 
-      
-      if(checkSocket(socket,roomId)){
+      if (checkSocket(socket, roomId)) {
         socket.send("You are already part of this room");
         return;
       }
       currentRoomInfo = roomId;
-      const roomSockets = allSockets.get(roomId) || [];//Room with no users 
+      const roomSockets = allSockets.get(roomId); //Room with no users
+      if (!roomSockets) {
+        socket.send("Room Doesnot exist");
+        return;
+      }
       roomSockets.push(socket);
       allSockets.set(roomId, roomSockets);
-
     } else if (messageInfo?.type === "chat") {
-
       if (!currentRoomInfo) {
         console.log("Not part of any room ");
         return;
@@ -60,8 +80,9 @@ wss.on("connection", (socket, req) => {
       const userRoom: WebSocket[] = allSockets.get(currentRoomInfo) || [];
 
       try {
+        console.log(messageInfo);
         if (userRoom.includes(socket)) {
-          userRoom.forEach(s => {
+          userRoom.forEach((s) => {
             s.send(messageInfo.payload?.message);
           });
         }

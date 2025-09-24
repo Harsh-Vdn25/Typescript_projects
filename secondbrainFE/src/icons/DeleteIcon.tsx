@@ -1,6 +1,8 @@
 import { type IconProps,iconSizeDetails } from "./index";
 
 
+
+
 export const DeleteIcon = (props:IconProps) => {
   return (
     <>
@@ -11,6 +13,7 @@ export const DeleteIcon = (props:IconProps) => {
         stroke-width="1.5"
         stroke="currentColor"
         className={iconSizeDetails[props.size]}
+        onClick={props.onClick}
       >
         <path
           stroke-linecap="round"

@@ -24,12 +24,13 @@ export const Signin = () => {
           alert("Signup failed, please try again.");
           return;
         }
-      localStorage.setItem('BrainlyToken',response.data['Token']);
+      localStorage.setItem('BrainlyToken',response.data?.Token);
       navigate('/home');
       }catch(err){
           console.log(err);
       }
     }
+
   return (
     
     <div className="w-screen h-screen  bg-gray-200 flex justify-center items-center">

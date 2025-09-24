@@ -1,15 +1,25 @@
+//import the Data,setData context  
+import { DataContext } from "../Context/ContextProvider";
+import { useContext } from "react";
+
 import ShareIcon from "../icons/ShareIcon";
 import { Twitter } from "../icons/Twitter";
 import { YouTube } from "../icons/YouTube";
 import { ContentType } from "./ContentModal";
 import { DeleteIcon } from "../icons/DeleteIcon";
-export interface CardProps {
-  title: string;
-  link: string;
-  type: "twitter" | "youtube" | "notes";
-}
+import {type CardProps } from "../types/content";
+
 
 export const BrainCard = ({ title, link, type }: CardProps) => {
+  const context=useContext(DataContext);
+  if(!context){
+    throw new Error('');
+  }
+  const {Data,setData}=context;
+
+  const deleteBrain=()=>{
+    console.log("clicked");
+  }
   return (
     <div
       className="p-8 bg-white rounded-md shadow-md border-gray-200
@@ -22,7 +32,8 @@ export const BrainCard = ({ title, link, type }: CardProps) => {
         </div>
         <div className="flex items-center gap-2 text-gray-500">
           <ShareIcon size="md" />
-          <DeleteIcon size="md" />
+          <DeleteIcon size="md" 
+          onClick={deleteBrain}/>
         </div>
       </div>
       <div>

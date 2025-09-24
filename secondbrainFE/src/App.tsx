@@ -14,7 +14,11 @@ const App = () => {
   const {Token,setToken}=context;
   useEffect(()=>{
     const fetchToken=()=>{
-      const token=localStorage.getItem("BrainlyToken")||'';
+      const token=localStorage.getItem("BrainlyToken");
+      if(!token){
+        console.log("No  token");
+        return;
+      }
       setToken(token);
     }
     fetchToken();
@@ -22,6 +26,7 @@ const App = () => {
   return (
     <>
     <Routes>
+      <Route path="/" element={<Navigate to='/Signup'/>}/>
       <Route path="/Signup" element={Token?<Navigate to='/home'/>:<Signup/>} />
       <Route path="/Signin" element={Token?<Navigate to='/home'/>:<Signin/>}/>
       <Route path="/home" element={Token?<Dashboard/>:<Signin/>}/>

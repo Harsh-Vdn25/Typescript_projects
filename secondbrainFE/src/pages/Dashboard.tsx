@@ -1,20 +1,27 @@
+import { DataContext } from "../Context/ContextProvider";
+import { useEffect, useState, useContext } from "react";
+
 import Button from "../components/Button";
 import PlusIcon from "../icons/PlusIcon";
 import ShareIcon from "../icons/ShareIcon";
 import { BrainCard } from "../components/BrainCard";
 import { ContentModal } from "../components/ContentModal";
-import { useEffect, useState, useContext } from "react";
 import { Sidebar } from "../components/Sidebar";
 import { api } from "../lib/api";
 import { UserContext } from "../Context/ContextProvider";
-import type { CardProps } from "../components/BrainCard";
 import { ShareBrain } from "../components/ShareBrain";
+import {type CardProps } from "../types/content";
+
 
 export const Dashboard = () => {
   const Token = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const [share, setShare] = useState(false);
-  const [Data, setData] = useState<CardProps[]>([]);
+  const context=useContext(DataContext);
+  if(!context){
+    throw new Error('');
+  }
+  const {Data,setData}=context;
   useEffect(() => {
     const fetchInfo = async () => {
       try {
@@ -23,7 +30,7 @@ export const Dashboard = () => {
             Authorization: `Bearer ${Token?.Token}`,
           },
         });
-        if (!response?.data || response.data.length === 0) {
+        if (!response?.data) {
           alert("No data present");
           return;
         }
@@ -68,7 +75,8 @@ export const Dashboard = () => {
         <div className="flex  flex-wrap gap-4">
           {Data &&
             Data.map((data: CardProps, value: any) => (
-              <BrainCard title={data.title} link={data.link} type={data.type} />
+              <BrainCard title={data.title} link={data.link}
+               type={data.type} />
             ))}
         </div>
       </div>
