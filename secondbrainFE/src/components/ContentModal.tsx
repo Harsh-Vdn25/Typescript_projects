@@ -18,6 +18,7 @@ export const ContentModal = ({ open, setOpen }: OpenType) => {
   const [title, setTitle] = useState("");
   const Token=useContext(UserContext)
   const [type, setType] = useState(ContentType.YouTube);
+
   async function addContent(): Promise<void> {
     if(!title||!Link){
       alert('please fill the required');
@@ -38,6 +39,8 @@ export const ContentModal = ({ open, setOpen }: OpenType) => {
       if(!response?.data){
         console.log('Try Again');
       }
+      setLink('');
+      setTitle('');
       setOpen(false);
     } catch (err) {
       console.log(err);

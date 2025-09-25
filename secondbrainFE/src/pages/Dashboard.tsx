@@ -1,3 +1,4 @@
+import { UserContext } from "../Context/ContextProvider";
 import { DataContext } from "../Context/ContextProvider";
 import { useEffect, useState, useContext } from "react";
 
@@ -8,9 +9,7 @@ import { BrainCard } from "../components/BrainCard";
 import { ContentModal } from "../components/ContentModal";
 import { Sidebar } from "../components/Sidebar";
 import { api } from "../lib/api";
-import { UserContext } from "../Context/ContextProvider";
 import { ShareBrain } from "../components/ShareBrain";
-import { type BrainCardtype } from "../components/BrainCard";
 
 
 export const Dashboard = () => {
@@ -42,14 +41,14 @@ export const Dashboard = () => {
     const timeout = setTimeout(fetchInfo, 3000);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [Data,Token]);
 
   return (
     <div className="position-relative">
       <div className="">
         <Sidebar />
       </div>
-      <div className="ml-72  h-screen bg-gray-200">
+      <div className="ml-72 pl-5 h-screen w-auto bg-gray-200">
         <ContentModal open={open} setOpen={setOpen} />
         <ShareBrain share={share} setShare={setShare} />
         <div className="flex justify-end gap-4 mb-5">

@@ -1,11 +1,11 @@
 import { useState, type Provider, type ReactNode } from "react";
 import { createContext } from "react";
-import type{ BrainDataType,CardProps } from "../types/content";
+import type{ 
+  TokenType,
+  BrainDataType,
+  CardProps 
+} from "../types/content";
 
-type TokenType = {
-  Token: string;
-  setToken: React.Dispatch<React.SetStateAction<string>>;
-};
 
 
 interface ProviderProps {

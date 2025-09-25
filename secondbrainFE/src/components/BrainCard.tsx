@@ -20,7 +20,7 @@ export const BrainCard = ({ title, link, type,_id }:CardProps) => {
   if(!context){
     throw new Error('');
   }
-  const {Token,setToken}=usercontext;
+  const {Token}=usercontext;
   const {Data,setData}=context;
 
   const deleteBrain=async (e:React.MouseEvent<SVGElement>)=>{
@@ -35,7 +35,8 @@ export const BrainCard = ({ title, link, type,_id }:CardProps) => {
         return;
       }
       console.log(Data);
-      // const newData=Data.filter()
+      const newData=Data.filter(d=>d._id!==_id);
+      setData(newData);
     }catch(err){
       console.error(err);
     }
@@ -43,7 +44,7 @@ export const BrainCard = ({ title, link, type,_id }:CardProps) => {
   return (
     <div
       className="p-8 bg-white rounded-md shadow-md border-gray-200
-    max-w-72 border flex flex-col  gap-4"
+    max-w-72 md:w-30 border flex flex-col flex-wrap gap-4"
     >
       <div className="flex  justify-between text-md">
         <div className="flex items-center gap-2">
@@ -51,7 +52,8 @@ export const BrainCard = ({ title, link, type,_id }:CardProps) => {
           {title}
         </div>
         <div className="flex items-center gap-2 text-gray-500">
-          <ShareIcon size="md" />
+          <ShareIcon size="md" 
+           />
           <DeleteIcon size="md" 
           onClick={(e)=>deleteBrain(e)}/>
         </div>
@@ -62,7 +64,7 @@ export const BrainCard = ({ title, link, type,_id }:CardProps) => {
             className="w-full h-auto"
             width="560"
             height="315"
-            src={link.replace("watch", "embed")}
+            src={link.includes("watch") ? link.replace("watch?v=", "embed/") : link}
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
