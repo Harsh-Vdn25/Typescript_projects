@@ -13,6 +13,6 @@ export const checkContent=async(req:Request,res:Response,next:NextFunction):Prom
         }
         next();
     }catch(err){
-        res.status(500)
+        res.status(500).json({message:"Problem from the serverside"});
     }
 }
