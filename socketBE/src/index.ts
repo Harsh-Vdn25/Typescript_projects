@@ -7,6 +7,11 @@ let userCount = 0;
 //roomId:string socket:WebSocket
 let allSockets = new Map<string, WebSocket[]>();
 
+interface messageType{
+  type:string;
+  message:string
+}
+
 type SocketMessage =
   | { type: "join"; payload: { roomId: string } }
   | { type: "chat"; payload: { message: string } }
@@ -51,7 +56,8 @@ wss.on("connection", (socket, req) => {
       allSockets.set(roomId, [socket]);
       currentRoomInfo = roomId;
       socket.send(JSON.stringify({ roomId }));
-    } else if (messageInfo.type === "join") {
+    }
+    else if (messageInfo.type === "join") {
       const roomId = messageInfo.payload?.roomId;
 
       if (!roomId) {
@@ -65,8 +71,13 @@ wss.on("connection", (socket, req) => {
       }
       currentRoomInfo = roomId;
       const roomSockets = allSockets.get(roomId); //Room with no users
+
       if (!roomSockets) {
-        socket.send("Room Doesnot exist");
+        const errorMessage:messageType={
+          type:'error',
+          message:'Room Doesnot exist'
+        }
+        socket.send(JSON.stringify(errorMessage));
         return;
       }
       roomSockets.push(socket);

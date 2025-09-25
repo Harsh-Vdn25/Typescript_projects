@@ -28,19 +28,17 @@ export const RoomEntry = () => {
           })
         );
 
-        socketRef.current.onmessage=(event)=>{
-            const roomInfo:string=event?.data
-            const roomId=JSON.parse(roomInfo).roomId;
-            if(!roomId){
-                console.log("Try again");
-                return;
-            }
-            setRoomId(roomId);
-            navigate('/chat');
-       }
+        socketRef.current.onmessage = (event) => {
+          const roomInfo: string = event?.data;
+          const roomId = JSON.parse(roomInfo).roomId;
+          if (!roomId) {
+            console.log("Try again");
+            return;
+          }
+          setRoomId(roomId);
+          navigate("/chat");
+        };
       };
-
-      
     } else {
       if (userRoomId.length === 0) {
         alert("please enter the room Id");
@@ -58,8 +56,16 @@ export const RoomEntry = () => {
               },
             })
           );
-          setRoomId(userRoomId);
-          navigate("/chat");
+          socketRef.current.onmessage = (e) => {
+            const data = JSON.parse(e?.data);
+
+            if (data?.type === "error") {
+              alert(data?.message);
+              return;
+            }
+            setRoomId(userRoomId);
+            navigate("/chat");
+          };
         } catch (err) {
           console.log("Failed to Join", err);
           return;

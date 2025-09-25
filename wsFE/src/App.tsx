@@ -12,7 +12,7 @@ export const App = () => {
   const {roomId}=Context;
   return (
     <Routes>
-      {/* <Route path='/' element={<Navigate to='/join'/>}/> */}
+      <Route path='/' element={<Navigate to='/join'/>}/>
       <Route path={'/join'} element={roomId?<Navigate to='/chat'/>:<RoomEntry/>}/>
       <Route path='/chat' element={roomId?<ChatPage/>:<Navigate to='/join'/>}/>
     </Routes>
